@@ -305,7 +305,7 @@ function imprimirSimbolo($simbolo)
 }
 
 /**
- * Imprime en pantalla el tabler del tateti
+ * Imprime en pantalla el tablero del tateti
  *  @param array $tablero
  */
 function imprimirTableroTateti($tablero)
