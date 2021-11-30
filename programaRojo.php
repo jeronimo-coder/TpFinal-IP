@@ -11,7 +11,6 @@ include_once("tateti.php");
 
 
 
-
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
@@ -21,7 +20,8 @@ include_once("tateti.php");
  */
 
  function seleccionarOpcion () {
-    echo "\n1) Jugar tateti
+    echo
+    "\n    1) Jugar tateti
     2) Mostrar un juego
     3) Mostrar el primer juego ganador
     4) Mostrar porcentaje de juegos ganados
@@ -41,7 +41,7 @@ include_once("tateti.php");
   * @return array
   */
 
-  function cargarJuegos(){
+  function cargarLosJuegos(){
       $juegos = [];
       $juegos[0] = [
         "jugadorCruz" => "JERO",
@@ -107,7 +107,7 @@ include_once("tateti.php");
   }
 
   /** Muestra los datos de un juego elegido
-   * @param int $juegosColeccion
+   * @param array $juegosColeccion
    * @param int $num
    * 
    */
@@ -172,6 +172,7 @@ include_once("tateti.php");
  /** Modulo que nos muestra el resumen de juegos de un jugador
   * @param array $juegos
   * @param string $nombreJugador
+  * @return array
   */
  
   function resumenDeJug($juegosCol, $nombreJugador) {
@@ -301,12 +302,9 @@ include_once("tateti.php");
 
 //Inicialización de variables:
 
+$cargarJuegos = cargarLosJuegos();
 
 //Proceso:
-
-
-$cargarJuegos = cargarJuegos();
-
 
 
 do {
@@ -332,7 +330,7 @@ do {
             $nombre = trim(fgets(STDIN));
             $nombre = strtoupper($nombre);
             $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
-            if ($primerJuegoGanado >= 1){
+            if ($primerJuegoGanado >= 0){
                 $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
             } else{
                 echo "El jugador ".$nombre. " no ganó ningún juego";
