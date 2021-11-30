@@ -161,8 +161,6 @@ function mostrarPrimerGanado($coleccionJuegos, $nombreJug)
     $i = 0;
     $indice = -1;
     while ($i < $n && !($indice == $i)) {
-        echo "Ingrese un numero de juego valido: ";
-        $num = trim(fgets(STDIN));
         if ($coleccionJuegos[$i]["jugadorCruz"] == $nombreJug) {
             if ($coleccionJuegos[$i]["puntosCruz"] > $coleccionJuegos[$i]["puntosCirculo"]) {
                 $indice = $i;
@@ -347,7 +345,7 @@ do {
             $nombre = trim(fgets(STDIN));
             $nombre = strtoupper($nombre);
             $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
-            if ($primerJuegoGanado >= 1) {
+            if ($primerJuegoGanado >= 0) {
                 $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
             } else {
                 echo "El jugador " . $nombre . " no ganó ningún juego";
