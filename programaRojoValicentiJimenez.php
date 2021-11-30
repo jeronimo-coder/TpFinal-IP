@@ -383,4 +383,7 @@ do {
             $ordenarPorO = ordenarPorNombreJugO($cargarJuegos);
             break;
     }
+
 } while ($iniciarMenu != 7);
+
+

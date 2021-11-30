@@ -299,6 +299,11 @@ include_once("tateti.php");
 
 //Declaración de variables:
 
+/* array $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO, $jugarTateti
+   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
+   string $nombre, $elegirJuego, $eleccionSim
+   float $porcentajeGanados
+*/
 
 //Inicialización de variables:
 
@@ -306,6 +311,9 @@ $cargarJuegos = cargarLosJuegos();
 
 //Proceso:
 
+
+
+$cargarJuegos = cargarLosJuegos();
 
 do {
     
