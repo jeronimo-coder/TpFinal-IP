@@ -311,10 +311,10 @@ function ordenarPorNombreJugO($coleccion)
 
 //Declaración de variables:
 
-/* array $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO, $jugarTateti
-   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
-   string $nombre, $elegirJuego, $eleccionSim
-   float $porcentajeGanados
+/* ARRAY $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO, $jugarTateti
+   INT $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
+   STRING $nombre, $elegirJuego, $eleccionSim
+   FLOAT $porcentajeGanados
 */
 
 //Inicialización de variables:
@@ -322,10 +322,7 @@ function ordenarPorNombreJugO($coleccion)
 
 //Proceso:
 
-
 $cargarJuegos = cargarLosJuegos();
-
-
 
 do {
 
