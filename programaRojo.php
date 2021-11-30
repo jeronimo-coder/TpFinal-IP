@@ -41,7 +41,7 @@ include_once("tateti.php");
   * @return array
   */
 
-  function cargarJuegos(){
+  function cargarLosJuegos(){
       $juegos = [];
       $juegos[0] = [
         "jugadorCruz" => "JERO",
@@ -298,6 +298,11 @@ include_once("tateti.php");
 
 //Declaración de variables:
 
+/* array $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO, $jugarTateti
+   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
+   string $nombre, $elegirJuego, $eleccionSim
+   float $porcentajeGanados
+*/
 
 //Inicialización de variables:
 
@@ -305,7 +310,7 @@ include_once("tateti.php");
 //Proceso:
 
 
-$cargarJuegos = cargarJuegos();
+$cargarJuegos = cargarLosJuegos();
 
 
 
