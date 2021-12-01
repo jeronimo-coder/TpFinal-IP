@@ -22,15 +22,14 @@ include_once("tateti.php");
 
 function seleccionarOpcion()
 {
-    echo
-    "\n    1) Jugar tateti
-    2) Mostrar un juego
-    3) Mostrar el primer juego ganador
-    4) Mostrar porcentaje de juegos ganados
-    5) Mostrar resumen de Jugador
-    6) Mostrar listado de juegos Ordenado por jugador O
-    7) Salir \n";
-    echo "Que opcion desea ingresar?: ";
+    echo "1) Jugar tateti\n";
+    echo "2) Mostrar un juego\n";
+    echo "3) Mostrar el primer juego ganador\n";
+    echo "4) Mostrar porcentaje de juegos ganados\n";
+    echo "5) Mostrar resumen de Jugador\n";
+    echo "6) Mostrar listado de juegos Ordenado por jugador O\n";
+    echo "7) Salir \n";
+    echo "Que opcion desea ingresar?: \n";
 
     //Establecemos el rango de opciones validas que hay en el menu
     $opcionValida1 = 1;
@@ -117,13 +116,7 @@ function cargarLosJuegos()
 
 function mostrarJuego($juegosColeccion, $num)
 {
-    //$obtenerJuegos = cargarJuegos();
-    $n = count($juegosColeccion);
-    $i = 0;
-    while (!is_int($num) && ($num >= $n)) {
-        echo "Ingrese un numero de juego valido: ";
-        $num = trim(fgets(STDIN));
-    }
+    echo "**************************\n";
     if ($juegosColeccion[$num]["puntosCruz"] > $juegosColeccion[$num]["puntosCirculo"]) {
         $estadoJuego = "Gano X";
     } elseif ($juegosColeccion[$num]["puntosCruz"] == $juegosColeccion[$num]["puntosCirculo"]) {
@@ -133,7 +126,8 @@ function mostrarJuego($juegosColeccion, $num)
     }
     echo "Juego TATETI: " . $num . "(" . $estadoJuego . ")";
     echo "\nJugador X: " . $juegosColeccion[$num]["jugadorCruz"] . " obtuvo " . $juegosColeccion[$num]["puntosCruz"] . " puntos";
-    echo "\nJugador O: " . $juegosColeccion[$num]["jugadorCirculo"] . " obtuvo " . $juegosColeccion[$num]["puntosCirculo"] . " puntos";
+    echo "\nJugador O: " . $juegosColeccion[$num]["jugadorCirculo"] . " obtuvo " . $juegosColeccion[$num]["puntosCirculo"] . " puntos\n";
+    echo "**************************\n";
 }
 
 /** Se ingresa un nuevo juego en la coleccion
@@ -292,15 +286,48 @@ function juegosGanadosPorSimbolo($arrayJuegos, $simboloElegido)
 
 function ordenarPorNombreJugO($coleccion)
 {
-    $jugadoresO = [];
-    $n = count($coleccion);
-    for ($i = 0; $i < $n; $i++) {
-        $jugadoresO[$i] = $coleccion[$i]["jugadorCirculo"];
-    }
     // uso la funcion predefinida uasort para mantener asociado el indice junto a su valor
-    // Uso la funcion predefinada strcmp para ordenar alfabeticamente
-    uasort($jugadoresO, 'strcmp');
-    print_r($jugadoresO);
+    // Uso la funcion predefinada print_r para ordenar alfabeticamente
+    uasort($coleccion, 'cmp');
+    print_r($coleccion);
+}
+
+/** Funcion para realizar comparaciones
+ * @param array $a
+ * @param array $b
+ * @return int
+ */
+
+function cmp($a, $b)
+{
+    $resultado = 0;
+    if ($a['jugadorCirculo'] > $b['jugadorCirculo']) {
+        $resultado = 1;
+    } elseif ($a['jugadorCirculo'] < $b['jugadorCirculo']) {
+        $resultado = -1;
+    }
+    return ($resultado);
+}
+
+/** Funcion para saber si el jugador ingresado existe
+ * @param string $nomJug
+ * @param array $validarJug
+ * @return bool
+ */
+
+function existeJugador($nomJug, $validarJug)
+{
+    $j = 0;
+    $siExiste = false;
+    do {
+        if ($validarJug[$j]['jugadorCruz'] == $nomJug) {
+            $siExiste = true;
+        } elseif ($validarJug[$j]['jugadorCirculo'] == $nomJug) {
+            $siExiste = true;
+        }
+        $j++;
+    } while ($j < count($validarJug) && !$siExiste);
+    return ($siExiste);
 }
 
 /**************************************/
@@ -309,10 +336,10 @@ function ordenarPorNombreJugO($coleccion)
 
 //Declaración de variables:
 
-/* ARRAY $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO, $jugarTateti
-   INT $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
-   STRING $nombre, $elegirJuego, $eleccionSim
-   FLOAT $porcentajeGanados
+/* array $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO
+   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
+   string $nombre, $elegirJuego, $eleccionSim
+   float $porcentajeGanados
 */
 
 //Inicialización de variables:
@@ -320,23 +347,32 @@ function ordenarPorNombreJugO($coleccion)
 
 //Proceso:
 
+
 $cargarJuegos = cargarLosJuegos();
+
+
 
 do {
 
     $iniciarMenu = seleccionarOpcion();
     //$iniciarMenu = ;
 
-
     switch ($iniciarMenu) {
         case 1:
             $jugarTateti = jugar();
+            imprimirResultado($jugarTateti);
             $agregar = agregarJuego($cargarJuegos, $jugarTateti);
             $cargarJuegos = $agregar;
             break;
         case 2:
-            echo "Ingrese un número de juego: ";
+            $minimo = 0;
+            $maximo = count($cargarJuegos) - 1;
+            echo "Ingrese un número de juego entre $minimo y $maximo: \n";
             $numero = trim(fgets(STDIN));
+            while (!is_int($numero) && !($numero >= $minimo && $numero <= $maximo)) {
+                echo "Numero invalido. Ingrese un número de juego entre $minimo y $maximo: \n";
+                $numero = trim(fgets(STDIN));
+            }
             $elegirJuego = mostrarJuego($cargarJuegos, $numero);
 
             break;
@@ -345,7 +381,7 @@ do {
             $nombre = trim(fgets(STDIN));
             $nombre = strtoupper($nombre);
             $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
-            if ($primerJuegoGanado >= 0) {
+            if ($primerJuegoGanado >= 1) {
                 $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
             } else {
                 echo "El jugador " . $nombre . " no ganó ningún juego";
@@ -364,21 +400,25 @@ do {
             $nombre = trim(fgets(STDIN));
             while (!ctype_alpha($nombre)) {
                 echo "Por favor ingrese un caracter valido. \n";
-                $nombre=trim((fgets(STDIN)));
-            } 
+                $nombre = trim((fgets(STDIN)));
+            }
             $nombre = strtoupper($nombre);
-            $resumenJug = resumenDeJug($cargarJuegos, $nombre);
-            echo "Jugador: " . $nombre . "\n
-            Ganó: " . $resumenJug["juegosGanados"] . "\n
-            Perdió: " . $resumenJug["juegosPerdidos"] . "\n
-            Empató: " . $resumenJug["juegosEmpatados"] . "\n
-            Total de puntos acumulados: " . $resumenJug["puntosAcumulados"];
+            $existe = existeJugador($nombre, $cargarJuegos);
+            if ($existe) {
+                $resumenJug = resumenDeJug($cargarJuegos, $nombre);
+                echo "**************************\n";
+                echo "Jugador: " . $nombre . "\n";
+                echo "Ganó: " . $resumenJug["juegosGanados"] . "\n";
+                echo "Perdió: " . $resumenJug["juegosPerdidos"] . "\n";
+                echo "Empató: " . $resumenJug["juegosEmpatados"] . "\n";
+                echo "Total de puntos acumulados: " . $resumenJug["puntosAcumulados"] . "\n";
+                echo "**************************\n";
+            } else {
+                echo "No se ha encontrado ningun registro de este jugador.\n";
+            }
             break;
         case 6:
             $ordenarPorO = ordenarPorNombreJugO($cargarJuegos);
             break;
     }
-
 } while ($iniciarMenu != 7);
-
-
