@@ -7,6 +7,7 @@ include_once("tateti.php");
 
 /* Apellido, Nombre. Legajo. Carrera. mail. Usuario Github */
 // Valicenti, Sergio. FAI-3535. TUDW. sergio.valicenti@est.fi.uncoma.edu.ar. Sergio Valicenti.
+// Rojo, Jerónimo. FAI-3675. TUDW. jeronimo.rojo@est.fi.uncoma.edu.ar. jeronimo-coder
 
 /* ... COMPLETAR ... */
 
