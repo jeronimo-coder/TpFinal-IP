@@ -402,7 +402,10 @@ do {
             if($exiteJugador){
                 $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
                 if ($primerJuegoGanado >= 1) {
-                $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
+                $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
+                }
+                if ($primerJuegoGanado >= 1) {
+                    $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
             } else {
                 echo "El jugador " . $nombre . " no ganó ningún juego";
             }
@@ -444,4 +447,6 @@ do {
             $ordenarPorO = ordenarPorNombreJugO($cargarJuegos);
             break;
     }
+
 } while ($iniciarMenu != 7);
+
