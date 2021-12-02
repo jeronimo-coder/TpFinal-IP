@@ -110,18 +110,18 @@ function cargarLosJuegos()
     ];
     $juegos = [];
 
-$jg1 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 1, "puntosCirculo" => 1];
-$jg2 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "AMARILIS", "puntosCruz" => 3, "puntosCirculo" => 0];
-$jg3 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "MILOS",    "puntosCruz" => 0, "puntosCirculo" => 4];
-$jg4 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
-$jg5 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 5, "puntosCirculo" => 0];
-$jg6 = ["jugadorCruz" => "FEDORA",   "jugadorCirculo" => "CALIXTO",  "puntosCruz" => 0, "puntosCirculo" => 3];
-$jg7 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "AMARILIS", "puntosCruz" => 4, "puntosCirculo" => 0];
-$jg8 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
-$jg9 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "FEDORA",   "puntosCruz" => 2, "puntosCirculo" => 0];
-$jg10= ["jugadorCruz" => "MILOS",    "jugadorCirculo" => "ZENDA",   "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg1 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg2 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "AMARILIS", "puntosCruz" => 3, "puntosCirculo" => 0];
+    $jg3 = ["jugadorCruz" => "ZENDA",    "jugadorCirculo" => "MILOS",    "puntosCruz" => 0, "puntosCirculo" => 4];
+    $jg4 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg5 = ["jugadorCruz" => "AMARILIS", "jugadorCirculo" => "MILOS",    "puntosCruz" => 5, "puntosCirculo" => 0];
+    $jg6 = ["jugadorCruz" => "FEDORA",   "jugadorCirculo" => "CALIXTO",  "puntosCruz" => 0, "puntosCirculo" => 3];
+    $jg7 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "AMARILIS", "puntosCruz" => 4, "puntosCirculo" => 0];
+    $jg8 = ["jugadorCruz" => "CALIXTO",  "jugadorCirculo" => "TRUMAN",   "puntosCruz" => 1, "puntosCirculo" => 1];
+    $jg9 = ["jugadorCruz" => "TRUMAN",   "jugadorCirculo" => "FEDORA",   "puntosCruz" => 2, "puntosCirculo" => 0];
+    $jg10 = ["jugadorCruz" => "MILOS",    "jugadorCirculo" => "ZENDA",   "puntosCruz" => 1, "puntosCirculo" => 1];
 
-array_push($juegos, $jg1, $jg2, $jg3, $jg4, $jg5, $jg6, $jg7, $jg8, $jg9, $jg10);
+    array_push($juegos, $jg1, $jg2, $jg3, $jg4, $jg5, $jg6, $jg7, $jg8, $jg9, $jg10);
 
     return ($juegos);
 }
@@ -348,6 +348,34 @@ function existeJugador($nomJug, $validarJug)
     return ($siExiste);
 }
 
+/** Funcion que valida si los numeros estan entre 0 y 9
+ * @param int $num
+ * @param int $min
+ * @param int $max
+ * @return int
+ */
+
+function validJuegos($num, $max, $min)
+{
+    while (!is_int($num) && !($num >= $min && $num <= $max)) {
+        echo "Numero invalido. Ingrese un número de juego entre $min y $max: \n";
+        $num = trim(fgets(STDIN));
+    }
+    return($num);
+} 
+
+/** Funcion que valida que el caracter ingresado sea valido
+ * @param string $nomb
+ * @return string
+ */
+function caractValido($nomb) {
+    while (!ctype_alpha($nomb)) {
+        echo "Por favor ingrese un caracter valido. \n";
+        $nomb = trim((fgets(STDIN)));
+    }
+    return($nomb);
+} 
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -355,9 +383,10 @@ function existeJugador($nomJug, $validarJug)
 //Declaración de variables:
 
 /* array $jugarTateti, $agregar, $cargarJuegos, $resumenJug, $ordenarPorO
-   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim
+   int $primerJuegoGanado, $iniciarMenu, $numero, $totalJuegosGanados, $ganadosPorSim, $validacionRango
    string $nombre, $elegirJuego, $eleccionSim
    float $porcentajeGanados
+   bool $existeElJugador
 */
 
 //Inicialización de variables:
@@ -387,10 +416,8 @@ do {
             $maximo = count($cargarJuegos) - 1;
             echo "Ingrese un número de juego entre $minimo y $maximo: \n";
             $numero = trim(fgets(STDIN));
-            while (!is_int($numero) && !($numero >= $minimo && $numero <= $maximo)) {
-                echo "Numero invalido. Ingrese un número de juego entre $minimo y $maximo: \n";
-                $numero = trim(fgets(STDIN));
-            }
+            $validacionRango=validJuegos($numero, $maximo, $minimo);
+            $numero=$validacionRango;
             $elegirJuego = mostrarJuego($cargarJuegos, $numero);
 
             break;
@@ -398,20 +425,22 @@ do {
             echo "Ingrese el nombre del jugador: ";
             $nombre = trim(fgets(STDIN));
             $nombre = strtoupper($nombre);
-            $exiteJugador = existeJugador($nombre, $cargarJuegos);
-            if($exiteJugador){
+            $verificaCaracter=caractValido($nombre);
+            $nombre=$verificaCaracter;
+            $exiteElJugador = existeJugador($nombre, $cargarJuegos);
+            if ($exiteElJugador) {
                 $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
                 if ($primerJuegoGanado >= 1) {
-                $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
+                    $primerJuegoGanado = mostrarPrimerGanado($cargarJuegos, $nombre);
                 }
                 if ($primerJuegoGanado >= 1) {
                     $mostrarElJuego = mostrarJuego($cargarJuegos, $primerJuegoGanado);
+                } else {
+                    echo "El jugador " . $nombre . " no ganó ningún juego";
+                }
             } else {
-                echo "El jugador " . $nombre . " no ganó ningún juego";
+                echo "No se encuentran registro de este jugador.\n";
             }
-        } else {
-            echo "No se encuentran registro de este jugador.\n";
-        }
             break;
         case 4:
             $eleccionSim = eleccionSimbolo();
@@ -424,10 +453,8 @@ do {
         case 5:
             echo "Ingrese el nombre del jugador: ";
             $nombre = trim(fgets(STDIN));
-            while (!ctype_alpha($nombre)) {
-                echo "Por favor ingrese un caracter valido. \n";
-                $nombre = trim((fgets(STDIN)));
-            }
+            $verificaCaracter=caractValido($nombre);
+            $nombre=$verificaCaracter;
             $nombre = strtoupper($nombre);
             $existe = existeJugador($nombre, $cargarJuegos);
             if ($existe) {
@@ -447,6 +474,4 @@ do {
             $ordenarPorO = ordenarPorNombreJugO($cargarJuegos);
             break;
     }
-
 } while ($iniciarMenu != 7);
-
